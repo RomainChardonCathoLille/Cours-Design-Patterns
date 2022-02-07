@@ -17,14 +17,12 @@ public class Main {
         System.out.println(user.toString());
 
         Jeu jeu = new Jeu(user);
-        jeu.ajouterSituation(new Situation(" [Main du roi] Le peuple souhaite libérer les prisonniers [G: oui, D: non]", new Effet(0,5,-5,0), new Effet(0,-7,0,0)));
-        jeu.ajouterSituation(new Situation("[Paysan] Il n’y a plus à manger [G]: importer de la nourriture; [D]: ne rien faire]", new Effet(0,5,0,-5), new Effet(0,-5,0,0)));
-        jeu.ajouterSituation(new Situation("[Prêtre] Les dieux sont en colère [G: faire un sacrifice; D: ne rien faire]", new Effet(5,-3,0,0), new Effet(-5,0,0,0)));
-        jeu.ajouterSituation(new Situation("[Main du roi] Le Roi Baratheon rassemble son armée [G : le soutenir ; D : rester neutre]", new Effet(-3,0,3,-3), new Effet(0,3,0,0)));
-        jeu.ajouterSituation(new Situation("[Paysan] Abondance de récoltes cette année [G: taxer énormément; D: taxer un tout petit peu]", new Effet(0,-5,0,10), new Effet(0,-3,0,1)));
+        jeu.ajouterSituation(new Situation("[Main du Roi] Le peuple souhaite libérer les prisoniers [G: OUI; D: NON]", new Effet(0, 5, -5, 0), new Effet(0,-7,0,0)));
+        jeu.ajouterSituation(new Situation("[Paysan] Il n'y a plus rien à manger [G: Importer de la nourriture; D: Ne rien faire]", new Effet(0,5,0,-5), new Effet(0,-5,0,0)));
+        jeu.ajouterSituation(new Situation("[Prêtre] Les Dieux song en colère [G: Faire un sacrifice; D: Ne rien faire]", new Effet(5,-3,0,0), new Effet(-5,0,0,0) ));
+        jeu.ajouterSituation(new Situation("[Main du Roi] Le Roi Baratheon rassemble son armée [G: Le soutenir; D: Rester neutre]", new Effet(-3,0,3,-3), new Effet(0,3,0,0)));
+        jeu.ajouterSituation(new Situation("[Paysan] Abondance de récoltes cette année [G: Taxer énormément; D: Taxer un tout petit peu]", new Effet(0,-5,0,10), new Effet(0,-3,0,1)));
 
         jeu.jouer();
-
-
     }
 }
