@@ -26,6 +26,12 @@ public class Jeu {
             System.out.println(situation_actuelle.toString());
             String choix = my_scanner.nextLine();
 
+            while(!choix.toUpperCase().contentEquals("G") && !choix.toUpperCase().contentEquals("D")){
+                System.out.println("Choix incorrect !\n");
+                System.out.println(situation_actuelle.toString());
+                choix = my_scanner.nextLine();
+            }
+
             situation_actuelle.choix(choix, user);
             System.out.println(user.toString());
             jauges_ok = user.jauges_ok();

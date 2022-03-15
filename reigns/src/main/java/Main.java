@@ -12,6 +12,12 @@ public class Main {
         System.out.println("Faut-il vous appeller Roi ou Reine ? (0 pour Roi, 1 pour Reine)");
         queen_king = my_scanner.nextLine();
 
+        while(!queen_king.contentEquals("0") && !queen_king.contentEquals("1")){
+            System.out.printf("Choix incorrect !\n");
+            System.out.println("Faut-il vous appeller Roi ou Reine ? (0 pour Roi, 1 pour Reine)");
+            queen_king = my_scanner.nextLine();
+        }
+
         User user = new User(username, Integer.parseInt(queen_king));
         System.out.println(user.getUserDetails());
         System.out.println(user.toString());

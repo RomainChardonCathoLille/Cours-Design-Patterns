@@ -72,12 +72,10 @@ public class User {
     }
 
     public void appliquer_effet(Effet effet){
-        System.out.println(effet.effet_finance + effet.effet_armee + effet.effet_peuple + effet.effet_clerge);
         this.finance += effet.effet_finance;
         this.armee += effet.effet_armee;
         this.peuple += effet.effet_peuple;
         this.clerge += effet.effet_clerge;
-        System.out.println(effet.effet_finance + effet.effet_armee + effet.effet_peuple + effet.effet_clerge);
         if(this.finance < 0) this.finance = 0;
         if(this.armee < 0) this.armee = 0;
         if(this.peuple < 0) this.peuple = 0;

@@ -16,9 +16,9 @@ public class Situation {
     }
 
     public void choix(String choix, User utilisateur){
-        if(choix.toUpperCase() == "G"){
+        if(choix.toUpperCase().contentEquals("G")){
             utilisateur.appliquer_effet(this.effet_gauche);
-        } else {
+        } else if(choix.toUpperCase().contentEquals("D")) {
             utilisateur.appliquer_effet(this.effet_droite);
         }
     }
