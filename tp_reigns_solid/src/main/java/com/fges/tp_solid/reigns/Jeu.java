@@ -5,6 +5,7 @@
  */
 package com.fges.tp_solid.reigns;
 
+import com.fges.tp_solid.reigns.Jauges.Jauge;
 import com.fges.tp_solid.reigns.Jauges.TypeJauge;
 import com.fges.tp_solid.reigns.Personnage.Genre;
 import com.fges.tp_solid.reigns.Personnage.Personnage;
@@ -14,6 +15,8 @@ import com.fges.tp_solid.reigns.Questions.Questions;
 import static com.fges.tp_solid.reigns.Personnage.Genre.REINE;
 import static com.fges.tp_solid.reigns.Personnage.Genre.ROI;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -30,12 +33,10 @@ public class Jeu {
         
         // début du jeu 
         System.out.println("Bienvenue sur Reigns");
-        
-        initBanqueQuestions();
-        
         System.out.println("Création du personnage...");
         
         initPersonnage();
+        questions.initialiserQuestions(personnage.getJauges());
         
         System.out.println(personnage.getGenre().longRegne()
                 +" "+personnage.getNom());
@@ -44,11 +45,13 @@ public class Jeu {
         
         // tirage des questions
         int nbTours = 0;
-        while(!personnage.finDuJeu()){
+        boolean finDuJeu = false;
+        while(finDuJeu == false){
             nbTours++;
             Question question = questions.getQuestion();
             reponseQuestion(question);
             personnage.AfficheJauges();
+            finDuJeu = finDuJeu();
         }
         
         // fin du jeu
@@ -71,14 +74,14 @@ public class Jeu {
         }
         // applique les malus
         if(reponse.equals("G")){
-            question.appliqueEffetsGauche(personnage);
-            personnage.appliquerEffet(question.getEffetJaugeGauche());
+            //question.appliqueEffetsGauche(personnage);
+            question.getEffetJaugeGauche().Appliquer_Effets(personnage);
+            //personnage.appliquerEffet(personnage);
         }else{
-            personnage.appliquerEffet(question.getEffetJaugeDroite());
+            //personnage.appliquerEffet(question.getEffetJaugeDroite());
+            question.getEffetJaugeDroite().Appliquer_Effets(personnage);
         }
     }
-    
-    
     private static void initPersonnage(){        
         Scanner scanner = new Scanner(System.in);
         System.out.println("Entrez le nom du personnage: ");
@@ -94,56 +97,23 @@ public class Jeu {
             roiReine = REINE;
         }
         
-        Jeu.personnage = new Personnage(nom,roiReine);
+        /*Jeu.personnage = new Personnage(nom,roiReine,
+                new Jauge("Clergé"),
+                new Jauge("Peuple"),
+                new Jauge("Armée"),
+                new Jauge("Finance")
+                );*/
+        List<Jauge> jauges = Arrays.asList(new Jauge("Clergé", TypeJauge.CLERGE), new Jauge("Peuple", TypeJauge.PEUPLE), new Jauge("Armée", TypeJauge.ARMEE), new Jauge("Finances", TypeJauge.FINANCE));
+        Jeu.personnage = new Personnage(nom, roiReine, jauges);
     }
-    
-    private static void initBanqueQuestions(){
-        Question question1 = new Question(
-                "Main du roi",
-                "Le peuple souhaite libérer les prisonniers",
-                "Oui",
-                "Non");
-        question1.ajouteEffetGauche(TypeJauge.ARMEE, -5);
-        question1.ajouteEffetGauche(TypeJauge.PEUPLE, +5);
-        question1.ajouteEffetDroite(TypeJauge.PEUPLE, -7);
-        questions.ajouterQuestion(question1);
-        Question question2 = new Question(
-                "Paysan",
-                "Il n'y a plus rien à manger",
-                "Importer de la nourriture",
-                "Ne rien faire");
-        question2.ajouteEffetGauche(TypeJauge.FINANCE,-5);
-        question2.ajouteEffetGauche(TypeJauge.PEUPLE, +5);
-        question2.ajouteEffetDroite(TypeJauge.PEUPLE, -5);
-        questions.ajouterQuestion(question2);
-        Question question3 = new Question(
-                "Prêtre",
-                "Les dieux sont en colère",
-                "Faire un sacrifice",
-                "Ne rien faire");
-        question3.ajouteEffetGauche(TypeJauge.CLERGE, +5);
-        question3.ajouteEffetGauche(TypeJauge.PEUPLE, -3);
-        question3.ajouteEffetDroite(TypeJauge.CLERGE, -5);
-        questions.ajouterQuestion(question3);
-        Question question4 = new Question(
-                "Main du roi",
-                "Le roi Baratheon rassemble son armée",
-                "Le soutenir",
-                "Rester neutre");
-        question4.ajouteEffetGauche(TypeJauge.ARMEE, +3);
-        question4.ajouteEffetGauche(TypeJauge.FINANCE, -3);
-        question4.ajouteEffetGauche(TypeJauge.CLERGE, -3);
-        question4.ajouteEffetDroite(TypeJauge.PEUPLE, +3);
-        questions.ajouterQuestion(question4);
-        Question question5 = new Question(
-                    "Paysan",
-                    "Abondance de récoltes cette année",
-                    "Taxer énormément",
-                    "Taxer un tout petit peu");
-        question5.ajouteEffetGauche(TypeJauge.FINANCE, +10);
-        question5.ajouteEffetGauche(TypeJauge.PEUPLE, -5);
-        question5.ajouteEffetDroite(TypeJauge.FINANCE, +1);
-        question5.ajouteEffetDroite(TypeJauge.PEUPLE, -3);
-        questions.ajouterQuestion(question5);
+    public static boolean finDuJeu(){
+        List<Jauge> jauges = personnage.getJauges();
+        for(int i = 0; i < jauges.size(); i++){
+            if(jauges.get(i).getValeur() <= 0 || jauges.get(i).getValeur() >= 50){
+                return true;
+            }
+        }
+        return false;
     }
+
 }

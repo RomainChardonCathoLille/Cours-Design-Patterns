@@ -5,10 +5,8 @@
  */
 package com.fges.tp_solid.reigns.Personnage;
 
-
 import com.fges.tp_solid.reigns.Jauges.Jauge;
-import com.fges.tp_solid.reigns.Jauges.TypeJauge;
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,65 +17,38 @@ public class Personnage {
     
     protected String nom;
     protected Genre genre;
-    
-    protected Jauge jaugeClerge;
-    protected Jauge jaugePeuple;
-    protected Jauge jaugeArmee;
-    protected Jauge jaugeFinance;
-    
-    public Personnage(String nom, Genre genre){
+
+    protected List<Jauge> jauges;
+
+    /*
+    public Personnage(String nom, Genre genre, Jauge _jaugeClerge, Jauge _jaugePeuple, Jauge _jaugeArmee, Jauge _jaugeFinance){
         this.nom = nom;
         this.genre = genre;
-        
-        jaugeClerge = new Jauge("Clergé");
-        jaugePeuple = new Jauge("Peuple");
-        jaugeArmee = new Jauge("Armée");
-        jaugeFinance = new Jauge("Finance");
+
+        this.jaugeClerge = _jaugeClerge;
+        this.jaugePeuple = _jaugePeuple;
+        this.jaugeArmee = _jaugeArmee;
+        this.jaugeFinance = _jaugeFinance;
+    }*/
+    public Personnage(String nom, Genre genre, List<Jauge> _jauges){
+        this.nom = nom;
+        this.genre = genre;
+        this.jauges = _jauges;
     }
     
     /**
      * Affiche les jauges dans la console
      */
     public void AfficheJauges(){
+        /*
         this.jaugeClerge.afficher_jauge();
         this.jaugePeuple.afficher_jauge();
         this.jaugeArmee.afficher_jauge();
-        this.jaugeFinance.afficher_jauge();
+        this.jaugeFinance.afficher_jauge();*/
+        for(int i = 0; i < this.jauges.size(); i++){
+            this.jauges.get(i).afficher_jauge();
+        }
         System.out.flush();
-    }
-    
-    /**
-     * Le jeu s'arrête si une des jauges atteint 0 ou 50
-     * @return 
-     */
-    public boolean finDuJeu(){
-        if(jaugeClerge.jauge_remplie_ou_finie()
-        || jaugePeuple.jauge_remplie_ou_finie()
-        || jaugeArmee.jauge_remplie_ou_finie()
-        || jaugeFinance.jauge_remplie_ou_finie()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public void appliquerEffet(Map<TypeJauge, Integer> effets){
-        for(Map.Entry<TypeJauge, Integer> effet : effets.entrySet()){
-            switch (effet.getKey()){
-                case ARMEE:
-                    this.jaugeArmee.appliquer_effet(effet.getValue());
-                    break;
-                case CLERGE:
-                    this.jaugeClerge.appliquer_effet(effet.getValue());
-                    break;
-                case FINANCE:
-                    this.jaugeFinance.appliquer_effet(effet.getValue());
-                    break;
-                case PEUPLE:
-                    this.jaugePeuple.appliquer_effet(effet.getValue());
-                    break;
-            }
-        }
     }
 
     public String getNom() {
@@ -95,7 +66,10 @@ public class Personnage {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-
+    public List<Jauge> getJauges(){
+        return this.jauges;
+    }
+    /*
     public Jauge getJaugeClerge() {
         return jaugeClerge;
     }
@@ -126,6 +100,7 @@ public class Personnage {
 
     public void setJaugeFinance(Jauge jaugeFinance) {
         this.jaugeFinance = jaugeFinance;
-    }
+    }*/
+
     
 }
